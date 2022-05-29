@@ -3,7 +3,10 @@ import RGB from './RGB';
 export default class Ball {
   private readonly name: string;
   private readonly color: RGB;
-  private readonly vector: Vector2 = Vector2.defaultLocation();
+  private readonly vector: Vector2 = new Vector2(
+    window.innerWidth / 2 - 30,
+    window.innerHeight / 2 - 30,
+  );
   private htmlBall!: HTMLDivElement;
   readonly currentBallIndex = Ball.ballIndex;
 
@@ -19,6 +22,9 @@ export default class Ball {
     const newBall = document.createElement('div');
     newBall.classList.add('ball');
     newBall.dataset.number = Ball.ballIndex.toString();
+    newBall.style.left = this.vector.x + 'px';
+    newBall.style.top = this.vector.y + 'px';
+    console.log(window.screenLeft);
     Ball.ballIndex++;
 
     const ballName = document.createElement('h2');
