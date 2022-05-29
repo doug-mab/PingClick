@@ -15,11 +15,6 @@ export default class Ball {
     this.color = color;
   }
 
-  // <div class="ball">
-  //   <h2>Doug</h2>
-  //   <div class="ball-style"></div>
-  // </div>
-
   private generateBall(): HTMLDivElement {
     const newBall = document.createElement('div');
     newBall.classList.add('ball');
