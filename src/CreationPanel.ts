@@ -121,7 +121,7 @@ export default class CreationControls {
       '#ball-name',
     ) as HTMLInputElement;
     this.newBallInfo = {
-      name: name.value,
+      name: name.value || `Ball ${Ball.ballIndex}`,
       color: this.getRgb(),
     };
   }
