@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <title>PingClick</title>
+</head>
+<button id="add-button" title="Add">+</button>
+<div id="controls">
+  <button id="close" title="Close">X</button>
+  <form action="">
+    <label for="ball-name">Name:</label>
+    <input type="text" id="ball-name">
+
+    <label>Color:</label>
+    <div class="rgb-selector">
+      <div>
+        <input type="number" min="0" max="255" placeholder="R">
+        <input type="number" min="0" max="255" placeholder="G">
+        <input type="number" min="0" max="255" placeholder="B">
+      </div>
+      <div id="color-display"></div>
+      <button id="random-color">Random</button>
+    </div>
+    <button id="create-ball">Create</button>
+  </form>
+</div>
+<body>
+  <div id="root">
+  </div>
+  <script src="./assets/js/bundle.js"></script>
+</body>
+</html>
