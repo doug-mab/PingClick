@@ -2,7 +2,7 @@ import Ball from './Ball';
 
 export default class Game {
   private currentBall?: Ball;
-  private speed = 5;
+  private speed!: number;
   public ballsInGame: Ball[] = [];
   private keysPressed: { [key: string]: boolean } = {};
   private walkInterval!: NodeJS.Timer;
@@ -10,6 +10,17 @@ export default class Game {
   init(): void {
     // To be honest, I almost have no idea what I'm doing here.
     this.walkInterval = setInterval(() => {
+      this.speed = 6;
+
+      // Checks if he is moving diagonally probably in the worst way possible
+      if (
+        (this.keysPressed['ArrowLeft'] && this.keysPressed['ArrowUp']) ||
+        (this.keysPressed['ArrowLeft'] && this.keysPressed['ArrowDown']) ||
+        (this.keysPressed['ArrowRight'] && this.keysPressed['ArrowUp']) ||
+        (this.keysPressed['ArrowRight'] && this.keysPressed['ArrowDown'])
+      )
+        this.speed /= 2;
+
       if (this.keysPressed['ArrowLeft']) this.checkKeyPressX(-this.speed);
       if (this.keysPressed['ArrowRight']) this.checkKeyPressX(this.speed);
       if (this.keysPressed['ArrowUp']) this.checkKeyPressY(-this.speed);
