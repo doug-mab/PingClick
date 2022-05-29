@@ -1,15 +1,15 @@
 {
-  "name": "typescript",
-  "version": "1.0.0",
-  "description": "",
+  "name": "PingBall",
+  "version": "0.1.0",
+  "description": "A simple ball moving game.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "NODE_ENV=production webpack",
     "build:watch": "NODE_ENV=development webpack -w"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": ["Game"],
+  "author": "Douglas Brum",
   "license": "ISC",
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^5.20.0",
