@@ -16,6 +16,9 @@ export default class Ball {
   constructor(name: string, color: RGB) {
     this.name = name;
     this.color = color;
+    window.addEventListener('resize', () => {
+      this.checkAndMoveNewLimit();
+    });
   }
 
   private generateBall(): HTMLDivElement {
@@ -49,6 +52,12 @@ export default class Ball {
     this.htmlBall.style.left = this.vector.x + 'px';
     this.htmlBall.style.top = this.vector.y + 'px';
   }
+  private checkAndMoveNewLimit() {
+    console.log('checking');
+    this.vector.checkNewLimit();
+    this.htmlBall.style.left = this.vector.x + 'px';
+    this.htmlBall.style.top = this.vector.y + 'px';
+  }
 }
 
 class Vector2 {
@@ -65,7 +74,12 @@ class Vector2 {
   }
 
   updateLocation(x: number, y: number) {
-    this.x += x;
-    this.y += y;
+    if (this.x + x <= window.innerWidth - 30 && this.x + x >= 0) this.x += x;
+    if (this.y + y <= window.innerHeight - 30 && this.y + y >= 0) this.y += y;
+  }
+
+  checkNewLimit() {
+    if (this.x > window.innerWidth - 30) this.x = window.innerWidth - 30;
+    if (this.y > window.innerHeight - 30) this.y = window.innerHeight - 33;
   }
 }
