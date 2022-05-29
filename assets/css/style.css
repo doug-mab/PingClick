@@ -26,6 +26,7 @@ button {
   opacity: 0.5;
   font-size: 20px;
   font-weight: bolder;
+  z-index: 10;
 }
 
 #close {
@@ -49,6 +50,7 @@ button {
   right: 10px;
   top: 50px;
   transition: 600ms;
+  z-index: 10;
 }
 
 .controls-closed {
