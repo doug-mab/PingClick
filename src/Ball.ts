@@ -7,17 +7,17 @@ export default class Ball {
     window.innerWidth / 2 - 30,
     window.innerHeight / 2 - 30,
   );
-  private htmlBall!: HTMLDivElement;
+  htmlBall!: HTMLDivElement;
   readonly currentBallIndex = Ball.ballIndex;
 
-  private static ballIndex = 0;
+  static ballIndex = 0;
   private static ballMap = document.getElementById('root') as HTMLDivElement;
 
   constructor(name: string, color: RGB) {
     this.name = name;
     this.color = color;
     window.addEventListener('resize', () => {
-      this.checkAndMoveNewLimit();
+      this.checkAndMoveToLimit();
     });
   }
 
@@ -27,7 +27,6 @@ export default class Ball {
     newBall.dataset.number = Ball.ballIndex.toString();
     newBall.style.left = this.vector.x + 'px';
     newBall.style.top = this.vector.y + 'px';
-    console.log(window.screenLeft);
     Ball.ballIndex++;
 
     const ballName = document.createElement('h2');
@@ -44,7 +43,16 @@ export default class Ball {
   insertBallIntoBrowser(): void {
     this.htmlBall = this.generateBall();
     Ball.ballMap.appendChild(this.htmlBall);
+    this.focusBall();
     console.log(`${this.name} was generated!`);
+  }
+
+  focusBall(): void {
+    this.htmlBall.classList.add('ball-focus');
+  }
+
+  unfocusBall(): void {
+    this.htmlBall.classList.remove('ball-focus');
   }
 
   move(x: number, y: number) {
@@ -52,7 +60,8 @@ export default class Ball {
     this.htmlBall.style.left = this.vector.x + 'px';
     this.htmlBall.style.top = this.vector.y + 'px';
   }
-  private checkAndMoveNewLimit() {
+
+  private checkAndMoveToLimit() {
     console.log('checking');
     this.vector.checkNewLimit();
     this.htmlBall.style.left = this.vector.x + 'px';
@@ -80,6 +89,6 @@ class Vector2 {
 
   checkNewLimit() {
     if (this.x > window.innerWidth - 30) this.x = window.innerWidth - 30;
-    if (this.y > window.innerHeight - 30) this.y = window.innerHeight - 33;
+    if (this.y > window.innerHeight - 30) this.y = window.innerHeight - 30;
   }
 }
