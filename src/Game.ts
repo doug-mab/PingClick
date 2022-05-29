@@ -10,7 +10,7 @@ export default class Game {
   init(): void {
     // To be honest, I almost have no idea what I'm doing here.
     this.walkInterval = setInterval(() => {
-      this.speed = 6;
+      this.speed = 10;
 
       // Checks if he is moving diagonally probably in the worst way possible
       if (
@@ -19,13 +19,20 @@ export default class Game {
         (this.keysPressed['ArrowRight'] && this.keysPressed['ArrowUp']) ||
         (this.keysPressed['ArrowRight'] && this.keysPressed['ArrowDown'])
       )
-        this.speed /= 2;
+        this.speed = this.speed - this.speed / 5;
 
       if (this.keysPressed['ArrowLeft']) this.checkKeyPressX(-this.speed);
       if (this.keysPressed['ArrowRight']) this.checkKeyPressX(this.speed);
       if (this.keysPressed['ArrowUp']) this.checkKeyPressY(-this.speed);
       if (this.keysPressed['ArrowDown']) this.checkKeyPressY(this.speed);
-    }, 20);
+    }, 40);
+
+    document.addEventListener('click', (e) => {
+      const ball = e.target as HTMLDivElement;
+      if (ball.className == 'ball') this.switchBallTarget(ball);
+      if (ball.className == 'ball-style')
+        this.switchBallTarget(ball.parentElement as HTMLDivElement);
+    });
 
     document.addEventListener('keydown', (e) => {
       this.keysPressed[e.code] = true;
@@ -46,12 +53,26 @@ export default class Game {
     this.currentBall.move(0, value);
   }
 
+  private switchBallTarget(ball: HTMLDivElement) {
+    for (const ballInGame of this.ballsInGame) {
+      ballInGame.unfocusBall();
+
+      if (ballInGame.currentBallIndex == Number(ball.dataset.number)) {
+        this.updateCurrentBall(ballInGame);
+        this.currentBall?.focusBall();
+      }
+    }
+  }
+
   public updateCurrentBall(ball: Ball): void {
     this.currentBall = ball;
+    console.log(this.currentBall);
   }
+
   public createNewBall(ball: Ball): void {
     this.updateCurrentBall(ball);
-    this.ballsInGame.push(ball);
     this.currentBall?.insertBallIntoBrowser();
+    this.ballsInGame.push(ball);
+    this.switchBallTarget(ball.htmlBall);
   }
 }
