@@ -1,5 +1,7 @@
 // import Ball from './Ball';
 import RGB from './RGB';
+import Ball from './Ball';
+import Game from './Game';
 
 export default class CreationControls {
   private readonly controlsPanel = document.querySelector(
@@ -20,8 +22,25 @@ export default class CreationControls {
   private readonly randomColorButton = this.controlsPanel.querySelector(
     '#random-color',
   ) as HTMLButtonElement;
+  private createButton = this.creationForm.querySelector(
+    '#create-ball',
+  ) as HTMLButtonElement;
 
-  constructor() {
+  private newBallInfo: {
+    name: string;
+    color: RGB;
+  } = {
+    name: '',
+    color: new RGB(0, 0, 0),
+  };
+
+  private gameInstance: Game;
+
+  constructor(gameInstance: Game) {
+    this.gameInstance = gameInstance;
+  }
+
+  init() {
     this.openPanelButton.addEventListener('click', (e) => {
       e.preventDefault();
       this.openPanel();
@@ -35,6 +54,11 @@ export default class CreationControls {
     this.randomColorButton.addEventListener('click', (e) => {
       e.preventDefault();
       this.getRandomColor();
+    });
+
+    this.createButton.addEventListener('click', (e) => {
+      e.preventDefault();
+      this.createBall();
     });
 
     this.initColorDisplayUpdateChecker();
@@ -55,7 +79,7 @@ export default class CreationControls {
     });
   }
 
-  private getRgbArray(): RGB {
+  private getRgb(): RGB {
     const colorData = this.colorPanel.querySelectorAll(
       'input',
     ) as NodeListOf<HTMLInputElement>;
@@ -88,7 +112,25 @@ export default class CreationControls {
       '#color-display',
     ) as HTMLDivElement;
     setInterval(() => {
-      colorDisplay.style.backgroundColor = this.getRgbArray().htmlRgbColor();
+      colorDisplay.style.backgroundColor = this.getRgb().htmlRgbColor();
     }, 600);
+  }
+
+  registerInfo(): void {
+    const name = this.creationForm.querySelector(
+      '#ball-name',
+    ) as HTMLInputElement;
+    this.newBallInfo = {
+      name: name.value,
+      color: this.getRgb(),
+    };
+  }
+
+  createBall(): Ball {
+    this.registerInfo();
+    this.closePanel();
+    const newBall = new Ball(this.newBallInfo.name, this.newBallInfo.color);
+    this.gameInstance.createNewBall(newBall);
+    return newBall;
   }
 }

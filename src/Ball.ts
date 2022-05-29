@@ -4,6 +4,7 @@ export default class Ball {
   private readonly name: string;
   private readonly color: RGB;
   private readonly vector: Vector2 = Vector2.defaultLocation();
+  private htmlBall!: HTMLDivElement;
   readonly currentBallIndex = Ball.ballIndex;
 
   private static ballIndex = 0;
@@ -37,8 +38,15 @@ export default class Ball {
   }
 
   insertBallIntoBrowser(): void {
-    Ball.ballMap.appendChild(this.generateBall());
+    this.htmlBall = this.generateBall();
+    Ball.ballMap.appendChild(this.htmlBall);
     console.log(`${this.name} was generated!`);
+  }
+
+  move(x: number, y: number) {
+    this.vector.updateLocation(x, y);
+    this.htmlBall.style.left = this.vector.x + 'px';
+    this.htmlBall.style.top = this.vector.y + 'px';
   }
 }
 
@@ -53,5 +61,10 @@ class Vector2 {
 
   static defaultLocation() {
     return new Vector2(0, 0);
+  }
+
+  updateLocation(x: number, y: number) {
+    this.x += x;
+    this.y += y;
   }
 }

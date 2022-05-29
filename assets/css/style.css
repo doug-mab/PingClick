@@ -58,10 +58,12 @@ button {
 
 .ball {
   display: inline-flex;
+  position: absolute;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
   font-size: 10px;
+  transition: 40ms
 }
 
 .ball-style {
