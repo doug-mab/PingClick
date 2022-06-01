@@ -78,6 +78,8 @@ button {
   height: 30px;
   background-color: red;
   border-radius: 50%;
+  animation-name: ballCreated;
+  animation-duration: 300ms;
 }
 
 .ball-focus {
@@ -146,4 +148,17 @@ input {
   position: absolute;
   bottom: 10px;
   right: 10px;
+}
+
+@keyframes ballCreated {
+  from {
+    width: 0px;
+    height: 0px;
+    bottom: 5px;
+  }
+
+  to {
+    width: 30px;
+    height: 30px;
+  }
 }

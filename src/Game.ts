@@ -6,6 +6,7 @@ export default class Game {
   public ballsInGame: Ball[] = [];
   private keysPressed: { [key: string]: boolean } = {};
   private walkInterval!: NodeJS.Timer;
+  private gameSound = document.querySelector('#game-sound') as HTMLAudioElement;
 
   init(): void {
     // To be honest, I almost have no idea what I'm doing here.
@@ -70,6 +71,8 @@ export default class Game {
   }
 
   public createNewBall(ball: Ball): void {
+    this.gameSound.volume = 0.6;
+    this.gameSound.play();
     this.updateCurrentBall(ball);
     this.currentBall?.insertBallIntoBrowser();
     this.ballsInGame.push(ball);
